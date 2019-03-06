@@ -6,7 +6,7 @@
 2. 使用关系型数据库MSSQL
 3. 前期暂时不提供会员权限管理
 4. 关系图如下：　
-![avatar](http://45.40.244.84/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%B3%E7%B3%BB%E5%9B%BE.png)
+![avatar](http://45.40.244.84/images/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%B3%E7%B3%BB%E5%9B%BE01.png)
 
 ## 项目目录结构
 ![avatar](http://45.40.244.84/images/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png)
