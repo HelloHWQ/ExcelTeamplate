@@ -59,6 +59,31 @@ namespace ExcelTeamplate.TeamplateDbContext.Migrations
                     b.ToTable("Datas");
                 });
 
+            modelBuilder.Entity("ExcelTeamplate.Model.Field", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddTime");
+
+                    b.Property<int>("FieldLength");
+
+                    b.Property<string>("FieldName");
+
+                    b.Property<bool>("FieldRequired");
+
+                    b.Property<bool>("FieldState");
+
+                    b.Property<string>("FieldText");
+
+                    b.Property<int>("FieldType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fields");
+                });
+
             modelBuilder.Entity("ExcelTeamplate.Model.Log", b =>
                 {
                     b.Property<int>("Id")

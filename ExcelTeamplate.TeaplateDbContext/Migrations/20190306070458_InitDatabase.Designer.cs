@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExcelTeamplate.TeamplateDbContext.Migrations
 {
     [DbContext(typeof(TeamplateContext))]
-    [Migration("20190306030919_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190306070458_InitDatabase")]
+    partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -61,6 +61,31 @@ namespace ExcelTeamplate.TeamplateDbContext.Migrations
                     b.ToTable("Datas");
                 });
 
+            modelBuilder.Entity("ExcelTeamplate.Model.Field", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddTime");
+
+                    b.Property<int>("FieldLength");
+
+                    b.Property<string>("FieldName");
+
+                    b.Property<bool>("FieldRequired");
+
+                    b.Property<bool>("FieldState");
+
+                    b.Property<string>("FieldText");
+
+                    b.Property<int>("FieldType");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fields");
+                });
+
             modelBuilder.Entity("ExcelTeamplate.Model.Log", b =>
                 {
                     b.Property<int>("Id")
@@ -88,6 +113,8 @@ namespace ExcelTeamplate.TeamplateDbContext.Migrations
 
                     b.Property<DateTime>("AddTime");
 
+                    b.Property<int>("AttachId");
+
                     b.Property<string>("ClientIP");
 
                     b.Property<int>("DataId");
@@ -96,6 +123,8 @@ namespace ExcelTeamplate.TeamplateDbContext.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AttachId");
+
                     b.HasIndex("DataId");
 
                     b.ToTable("Mains");
@@ -103,6 +132,11 @@ namespace ExcelTeamplate.TeamplateDbContext.Migrations
 
             modelBuilder.Entity("ExcelTeamplate.Model.Main", b =>
                 {
+                    b.HasOne("ExcelTeamplate.Model.Attach", "Attach")
+                        .WithMany()
+                        .HasForeignKey("AttachId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ExcelTeamplate.Model.Data", "Data")
                         .WithMany()
                         .HasForeignKey("DataId")
