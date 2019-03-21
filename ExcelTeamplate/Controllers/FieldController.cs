@@ -28,10 +28,23 @@ namespace ExcelTeamplate.Controllers
         /// <param name="keyword">字段搜索关键字</param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetFieldList(int pageindex = 0, int pagesize = 0,string keyword = "")
+        public IActionResult GetFieldList(int pageindex = 1, int pagesize = 10,string keyword = "")
         {
-            _context.Datas.FromSql("select name from syscolumns where id in (select id from sysobjects)");
-            return BadRequest();
+            if(string.IsNullOrEmpty(keyword))
+            {
+                // 没有进行条件搜索
+                var list = (from f in _context.Fields
+                           where f.FieldState == true
+                           select f).Skip((pageindex - 1)*pagesize).Take(pagesize);
+                return Ok(list);
+            }
+            else
+            {
+                var list = (from f in _context.Fields
+                            where f.FieldState == true && f.FieldText.Contains(keyword)
+                            select f).Skip((pageindex - 1) * pagesize).Take(pagesize);
+                return Ok(list);
+            }
         }
     }
 }

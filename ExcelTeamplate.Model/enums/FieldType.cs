@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ExcelTeamplate.Model.enums
 {
+    /// <summary>
+    /// 对应的数据库字段类型
+    /// </summary>
     public enum FieldType
     {
         Varchar = 0,
