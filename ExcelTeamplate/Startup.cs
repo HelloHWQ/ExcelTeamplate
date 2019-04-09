@@ -29,7 +29,7 @@ namespace ExcelTeamplate
         {
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<TeamplateContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(connection, b=>b.UseRowNumberForPaging()));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
