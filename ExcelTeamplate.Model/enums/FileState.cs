@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ExcelTeamplate.Model.enums
 {
+    /// <summary>
+    /// 文件状态
+    /// </summary>
     public enum FileState
     {
         FileUploadFail = -1,

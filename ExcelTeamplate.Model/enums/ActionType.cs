@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ExcelTeamplate.Model.enums
 {
+    /// <summary>
+    /// 访问操作类型
+    /// </summary>
     public enum ActionType
     {
         Post,
