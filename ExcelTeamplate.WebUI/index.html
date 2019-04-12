@@ -8,29 +8,55 @@
   <link rel="stylesheet" href="./css/site.css">
 </head>
 <body>
-  <div class="main">
+  <div id="app" class="main">
     <h1>Excel 导入</h1>
     <hr>
     <div class="top">
-      <div class="item">姓名</div>
-      <div class="item">年龄</div>
-      <div class="item">姓名</div>
-      <div class="item">年龄</div>
-      <div class="item">姓名</div>
-      <div class="item">年龄</div>
-      <div class="item">姓名</div>
-      <div class="item">年龄</div>
-      <div class="black"></div>
-      <div class="black"></div>
-      <div class="black"></div>
+      <div class="item" v-for="item in fieldArray" v-bind:id="item.FieldName">{{ item.FieldText }}</div>
+
+      <div class="black" v-for="black in blackNum"></div>
     </div>
     <div class="foot">
-      <div class="item">年龄</div>
+      
     </div>
     <form id="mainForm">
       <input type="file" name="inputfile" id="inputfile">
       <input type="submit" value="提交">
     </form>
   </div>
+  <script src="./js/vue-2.6.0.js"></script>
+  <script src="./js/jquery-1.8.3.min.js"></script>
+  <script>
+    const rownum = 11
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        fieldArray: [{FieldName: 'username', FieldText: '姓名'},{FieldName: 'userage', FieldText: '年龄'}],
+        blackNum: 0
+      },
+      methods: {
+        GetFields: function() {
+          let that = this
+          $.ajax({
+            url: 'http://www.weather.com.cn/data/sk/101010100.html',
+            type: 'get',
+            async: false,
+            success: function(data) {
+              console.log(data)
+              // 给fieldArray赋值
+              that.blackNum = rownum -(that.fieldArray.length % rownum)
+            },
+            error: function(error) {
+              console.log(error)
+              that.blackNum = rownum -(that.fieldArray.length % rownum)
+            }
+          })
+        }
+      },
+      created: function() {
+        this.GetFields();
+      }
+    })
+  </script>
 </body>
 </html>
