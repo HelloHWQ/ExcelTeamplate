@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExcelTeamplate.Model;
 using ExcelTeamplate.TeamplateDbContext;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExcelTeamplate.Controllers
 {
+    [EnableCors("AllowSameDomain")]
     [Route("api/[controller]")]
     [ApiController]
     public class FieldController : ControllerBase

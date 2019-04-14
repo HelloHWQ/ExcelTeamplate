@@ -31,6 +31,11 @@ namespace ExcelTeamplate
             services.AddDbContext<TeamplateContext>
                 (options => options.UseSqlServer(connection, b=>b.UseRowNumberForPaging()));
 
+            #region 跨域配置
+            var urls = "*";//Configuration["AppConfig:Cores"].Split(',');
+            services.AddCors(options => options.AddPolicy("AllowSameDomain", builder => builder.WithOrigins(urls).AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials() ));
+            #endregion
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -39,6 +44,7 @@ namespace ExcelTeamplate
         {
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseCors("AllowSameDomain");
 
             if (env.IsDevelopment())
             {

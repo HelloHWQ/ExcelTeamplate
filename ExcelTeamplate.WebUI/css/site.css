@@ -43,6 +43,7 @@
   max-width: 100px;
   text-align: center;
   padding: 0 25px 0 25px; 
+  cursor: pointer;
 }
 
 .foot .item {
@@ -57,9 +58,10 @@
   max-width: 100px;
   text-align: center;
   padding: 0 25px 0 25px;
+  cursor: pointer;
 }
 
-.black {
+.top .black {
   margin: 5px;
   height: 50px;
   line-height: 50px;
@@ -72,6 +74,39 @@
   padding: 0 25px 0 25px; 
 }
 
+.foot .black {
+  margin: 5px;
+  height: 50px;
+  line-height: 50px;
+  border: 1px #fff solid;
+  border-radius: 5px;
+  color: #fff;
+  min-width: 50px;
+  max-width: 100px;
+  text-align: center;
+  padding: 0 25px 0 25px; 
+}
+
 input[type=submit] {
-  background-color: red;
+  background-color: #18c43d;
+  width: 100px;
+  height: 50px;
+  border: 1px #18c43d solid;
+  color: #fff;
+  border-radius: 5px;
+}
+
+input[type=button] {
+  background-color: #18c43d;
+  width: 100px;
+  height: 50px;
+  border: 1px #18c43d solid;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.selected{
+  background-color: #ccc !important;
+  border: 1px #ccc solid !important;
+  color: #18c43d;
 }

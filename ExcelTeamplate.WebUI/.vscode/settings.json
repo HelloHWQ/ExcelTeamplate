@@ -1,0 +1,5 @@
+{
+  "fileheader.Author": "hwq",
+  "fileheader.LastModifiedBy": "hwq",
+  "fileheader.tpl": "/* * @Author: {author} * @Date: {createTime}  * @Last Modified by:   {lastModifiedBy}  * @Last Modified time: {updateTime}  */"
+}

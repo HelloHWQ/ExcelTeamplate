@@ -20,8 +20,9 @@ namespace ExcelTeamplate.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostImportExcel()
+        public IActionResult PostImportExcel(FormCollection fc)
         {
+            Console.WriteLine(fc.Files.Count);
             return BadRequest();
         }
     }
