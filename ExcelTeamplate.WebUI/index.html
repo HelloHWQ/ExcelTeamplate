@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Excel 导入</title>
+  <title>ExcelTemplate</title>
   <link rel="stylesheet" href="./css/site.css">
 </head>
 <body>
   <div id="app" class="main">
-    <h1>Excel 导入</h1>
+    <h1>ExcelTemplate</h1>
     <hr>
     <div class="top" id="top">
       <div class="item" v-for="(item,index) in fieldArray" v-on:click="MoveToFoot(index)" v-bind:key="item.id" v-bind:id="item.fieldName">{{ item.fieldText }}</div>
