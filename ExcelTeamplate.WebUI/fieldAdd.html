@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 
 <head>
     <meta charset="UTF-8">
@@ -17,22 +17,61 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <label for="FieldName" class="col-sm-2 control-label">字段英文名称</label>
-                <div class="col-sm-10">
+                <div class="col-sm-5">
                     <input type="text" class="form-control" name="FieldName" id="FieldName" placeholder="字段英文名称">
                 </div>
             </div>
             <div class="form-group">
                 <label for="FiledText" class="col-sm-2 control-label">字段中文名称</label>
-                <div class="col-sm-10">
+                <div class="col-sm-5">
                     <input type="text" class="form-control" name="FiledText" id="FiledText" placeholder="字段中文名称">
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <label for="FiledType" class="col-sm-2 control-label">字段类型</label>
+                <div class="col-sm-5">
+                    <select class="form-control" name="FiledType" id="FiledType">
+                        <option value="0">Varchar </option>
+                        <option value="1">NVarchar </option>
+                        <option value="2">Int </option>
+                        <option value="3">Float </option>
+                        <option value="4">DateTime </option>
+                        <option value="5">Text  </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="FiledLength" class="col-sm-2 control-label">字段长度</label>
+                <div class="col-sm-5">
+                    <input type="number" class="form-control" name="FiledLength" id="FiledLength" placeholder="字段长度">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="FiledLength" class="col-sm-2 control-label">字段是否必需</label>
+                <div class="col-sm-5">
+                    <label class="radio-inline">
+                        <input type="radio" name="FiledRequired" id="FiledRequired1" checked value="1"> 必需
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="FiledRequired" id="FiledRequired2" value="0"> 非必需
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                    <label for="FiledType" class="col-sm-2 control-label">字段状态</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" name="FiledState" id="FiledState">
+                            <option value="1" selected>启用</option>
+                            <option value="0">禁用</option>
+                        </select>
+                    </div>
+                </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-5">
                     <button type="submit" class="btn btn-success">提交</button>
                 </div>
             </div>
-            
+
         </form>
     </div>
 </body>
