@@ -38,7 +38,8 @@ namespace ExcelTeamplate.Controllers
                 var list = (from f in _context.Fields
                             where f.FieldState == true
                             select f).Skip((pageindex - 1) * pagesize).Take(pagesize);
-                return Ok(list);
+                var temp = list.ToList();
+                return Ok(temp);
             }
             else
             {
@@ -47,6 +48,22 @@ namespace ExcelTeamplate.Controllers
                             select f).Skip((pageindex - 1) * pagesize).Take(pagesize);
                 return Ok(list);
             }
+        }
+
+        /// <summary>
+        /// 通过id获取字段的详细信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public IActionResult GetField(int id)
+        {
+            var field = _context.Fields.Find(id);
+            if (field == null)
+            {
+                return BadRequest();
+            }
+            return Ok(field);
         }
 
         /// <summary>

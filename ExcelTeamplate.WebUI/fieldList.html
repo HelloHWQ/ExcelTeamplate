@@ -20,50 +20,82 @@
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
-                    <th>序号</th>
-                    <th>字段英文名称</th>
-                    <th>字段中文名称</th>
-                    <th>字段类型</th>
-                    <th>字段长度</th>
-                    <th>是否必需</th>
-                    <th>字段状态</th>
-                    <th>操作</th>
+                    <th class="center">序号</th>
+                    <th class="center">字段英文名称</th>
+                    <th class="center">字段中文名称</th>
+                    <th class="center">字段类型</th>
+                    <th class="center">字段长度</th>
+                    <th class="center">是否必需</th>
+                    <th class="center">字段状态</th>
+                    <th class="center">操作</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td><a href="">编辑</a>|<a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td class="danger">Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td><a href="">编辑</a>|<a href="">删除</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Table cell</td>
-                    <td class="success">Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td>Table cell</td>
-                    <td><a href="">编辑</a>|<a href="">删除</a></td>
+                <tr v-for="(item,index) in fieldArray">
+                    <th class="center" scope="row">{{index + 1}}</th>
+                    <td class="center">{{ item.fieldName }}</td>
+                    <td class="center">{{ item.fieldText }}</td>
+                    <td class="center">{{ item.fieldType }}</td>
+                    <td class="center">{{ item.fieldLength }}</td>
+                    <td class="center">{{ item.fieldRequired }}</td>
+                    <td class="center">{{ item.fieldState }}</td>
+                    <td class="center"><a :href="'./fieldAdd.html?id=' + item.id" class="btn btn-success">编辑</a><span class="between"></span><a href="javascript:void(0)" @click="FieldDelete(item.id)" class="btn btn-danger">删除</a></td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <script src="./js/vue-2.6.0.js"></script>
+    <script src="./js/jquery-1.8.3.min.js"></script>
+    <script>
+      const host = 'https://localhost:5001';
+      const fieldType = ['Varchar', 'NVarchar', 'Int', 'Float', 'DateTime', 'Text'];
+
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          fieldArray: []
+        },
+        methods: {
+          GetFields: function () {
+            let that = this
+            $.ajax({
+              url: host+'/api/field',
+              type: 'get',
+              async: false,
+              success: function (data) {
+                // 给fieldArray赋值
+                data.forEach(element => {
+                  element.fieldType = fieldType[element.fieldType];
+                  if(element.fieldState) 
+                  {
+                    element.fieldState = '启用';
+                  }
+                  else
+                  {
+                    element.fieldState = '禁用';
+                  }
+                  if(element.fieldRequired)
+                  {
+                    element.fieldRequired = '必需';
+                  }
+                  else
+                  {
+                    element.fieldRequired = '不必需';
+                  }
+                  that.fieldArray.push(element);
+                });
+              },
+              error: function (error) {
+                console.log(error);
+              }
+            })
+          }
+        },
+        created() {
+          this.GetFields();
+        }
+      })
+    </script>
 </body>
 
 </html>

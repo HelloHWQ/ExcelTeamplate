@@ -18,19 +18,19 @@
             <div class="form-group">
                 <label for="FieldName" class="col-sm-2 control-label">字段英文名称</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="FieldName" id="FieldName" placeholder="字段英文名称">
+                    <input type="text" v-model="currentField.fieldName" class="form-control" name="FieldName" id="FieldName" placeholder="字段英文名称">
                 </div>
             </div>
             <div class="form-group">
                 <label for="FiledText" class="col-sm-2 control-label">字段中文名称</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="FiledText" id="FiledText" placeholder="字段中文名称">
+                    <input type="text" v-model="currentField.fieldText" class="form-control" name="FiledText" id="FiledText" placeholder="字段中文名称">
                 </div>
             </div>
             <div class="form-group">
                 <label for="FiledType" class="col-sm-2 control-label">字段类型</label>
                 <div class="col-sm-5">
-                    <select class="form-control" name="FiledType" id="FiledType">
+                    <select class="form-control" v-model="currentField.fieldType" name="FiledType" id="FiledType">
                         <option value="0">Varchar </option>
                         <option value="1">NVarchar </option>
                         <option value="2">Int </option>
@@ -43,24 +43,24 @@
             <div class="form-group">
                 <label for="FiledLength" class="col-sm-2 control-label">字段长度</label>
                 <div class="col-sm-5">
-                    <input type="number" class="form-control" name="FiledLength" id="FiledLength" placeholder="字段长度">
+                    <input type="number" v-model="currentField.fieldLength" class="form-control" name="FiledLength" id="FiledLength" placeholder="字段长度">
                 </div>
             </div>
             <div class="form-group">
                 <label for="FiledLength" class="col-sm-2 control-label">字段是否必需</label>
                 <div class="col-sm-5">
                     <label class="radio-inline">
-                        <input type="radio" name="FiledRequired" id="FiledRequired1" checked value="1"> 必需
+                        <input type="radio" name="FiledRequired" :checked="currentField.fieldRequired" id="FiledRequired1"  value="1"> 必需
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="FiledRequired" id="FiledRequired2" value="0"> 非必需
+                        <input type="radio" name="FiledRequired" :checked="!currentField.fieldRequired" id="FiledRequired2" value="0"> 非必需
                     </label>
                 </div>
             </div>
             <div class="form-group">
                     <label for="FiledType" class="col-sm-2 control-label">字段状态</label>
                     <div class="col-sm-5">
-                        <select class="form-control" name="FiledState" id="FiledState">
+                        <select class="form-control" v-model="currentField.fieldState?'1':'0'" name="FiledState" id="FiledState">
                             <option value="1" selected>启用</option>
                             <option value="0">禁用</option>
                         </select>
@@ -74,6 +74,62 @@
 
         </form>
     </div>
+    <script src="./js/vue-2.6.0.js"></script>
+    <script src="./js/jquery-1.8.3.min.js"></script>
+    <script>
+      const host = 'https://localhost:5001';
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          id: 0,
+          currentField: {
+              "fieldName": "",
+              "fieldText": "",
+              "fieldType": 0,
+              "fieldLength": '',
+              "fieldRequired": 1,
+              "fieldState": 1
+          }
+        },
+        created() {
+          // 获取页面传递过来的id
+          this.id = parseInt(this.getQueryString('id'));
+          // 如果id不为0那么请求一次后台数据
+          if(this.id != 0) {
+            this.GetFiled(this.id);
+          }
+        },
+        methods: {
+          getQueryString(name) {
+              var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+              var r = window.location.search.substr(1).match(reg);
+              if(r!=null)return  unescape(r[2]); return 0;
+          },
+          GetFiled(id) {
+            var that = this;
+            $.ajax({
+              url: host + '/api/field/'+ that.id,
+              type: 'get',
+              datatype: 'json',
+              async: false,
+              success: function (data){
+                if(data) {
+                  if(data.filedState) {
+                    data.filedState = 1;
+                  } else {
+                    data.filedState = 0;
+                  }
+                }
+                that.currentField = data;
+              },
+              error: function (error) {
+                console.log(error);
+              }
+            })
+          }
+        },
+      });
+    </script>
 </body>
 
 </html>

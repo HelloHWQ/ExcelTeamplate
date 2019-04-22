@@ -110,3 +110,13 @@ input[type=button] {
   border: 1px #ccc solid !important;
   color: #18c43d;
 }
+
+.center{
+  text-align: center;
+  vertical-align: center !important;
+}
+
+.between{
+  display: inline-block;
+  width: 10px;
+}
