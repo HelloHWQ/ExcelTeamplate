@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .main {
   padding: 20px;
 }
