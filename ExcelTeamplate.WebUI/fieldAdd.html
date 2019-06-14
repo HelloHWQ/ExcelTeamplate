@@ -14,21 +14,21 @@
     <div id="app" class="main" v-cloak>
         <h1>ExcelTemplate - Filed Add</h1>
         <hr>
-        <form class="form-horizontal">
+        <form class="form-horizontal" onsubmit="return false">
             <div class="form-group">
-                <label for="FieldName" class="col-sm-2 control-label">字段英文名称</label>
+                <label for="FieldName" class="col-sm-2 control-label">字段英文名称*</label>
                 <div class="col-sm-5">
                     <input type="text" v-model="currentField.fieldName" class="form-control" name="FieldName" id="FieldName" placeholder="字段英文名称">
                 </div>
             </div>
             <div class="form-group">
-                <label for="FiledText" class="col-sm-2 control-label">字段中文名称</label>
+                <label for="FiledText" class="col-sm-2 control-label">字段中文名称*</label>
                 <div class="col-sm-5">
                     <input type="text" v-model="currentField.fieldText" class="form-control" name="FiledText" id="FiledText" placeholder="字段中文名称">
                 </div>
             </div>
             <div class="form-group">
-                <label for="FiledType" class="col-sm-2 control-label">字段类型</label>
+                <label for="FiledType" class="col-sm-2 control-label">字段类型*</label>
                 <div class="col-sm-5">
                     <select class="form-control" v-model="currentField.fieldType" name="FiledType" id="FiledType">
                         <option value="0">Varchar </option>
@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="FiledLength" class="col-sm-2 control-label">字段长度</label>
+                <label for="FiledLength" class="col-sm-2 control-label">字段长度*</label>
                 <div class="col-sm-5">
                     <input type="number" v-model="currentField.fieldLength" class="form-control" name="FiledLength" id="FiledLength" placeholder="字段长度">
                 </div>
@@ -68,7 +68,7 @@
                 </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-5">
-                    <button type="submit" class="btn btn-success">提交</button>
+                    <button type="submit" class="btn btn-success" @click="SubmitField">提交</button>
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
     <script src="./js/vue-2.6.0.js"></script>
     <script src="./js/jquery-1.8.3.min.js"></script>
     <script>
-      const host = 'https://localhost:5001';
+      const host = 'https://localhost:44386';
       var vm = new Vue({
         el: '#app',
         data: {
@@ -126,6 +126,24 @@
                 console.log(error);
               }
             })
+          },
+          SubmitField: function() {
+            var submitmodel = this.currentField;
+            // 必填验证
+            if(submitmodel.fieldName !="" && submitmodel.fieldText !=""){
+              $.ajax({
+                url: 'api/field',
+                type: 'post',
+                datatype: 'json',
+                data: submitmodel,
+                success: function (data){
+                  console.log(data);
+                },
+                error: function (error) {
+                  console.log(error);
+                }
+              })
+            }
           }
         },
       });
