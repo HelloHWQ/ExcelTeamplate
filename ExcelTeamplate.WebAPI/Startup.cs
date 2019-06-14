@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace ExcelTeamplate
+namespace ExcelTeamplate.WebAPI
 {
     public class Startup
     {
@@ -33,7 +33,7 @@ namespace ExcelTeamplate
 
             #region 跨域配置
             var urls = "*";//Configuration["AppConfig:Cores"].Split(',');
-            services.AddCors(options => options.AddPolicy("AllowSameDomain", builder => builder.WithOrigins(urls).AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials() ));
+            services.AddCors(options => options.AddPolicy("AllowSameDomain", builder => builder.WithOrigins(urls).AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials()));
             #endregion
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
