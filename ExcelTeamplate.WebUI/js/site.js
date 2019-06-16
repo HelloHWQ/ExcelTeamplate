@@ -86,14 +86,18 @@ var vm = new Vue({
       }
     },
     SubmitForm: function () {
-      let formdata = new FormData(document.querySelector("#mainForm"))
+      let formdata = new FormData($("#mainForm")[0]);
       $.ajax({
-        url: '/api/excel',
+        url: host+'/api/excel',
         type: 'post',
         datatype: 'json',
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
         data: formdata,
         success: function (data){
-
+          console.log(data);
         },
         error: function (error){
           console.log(error);

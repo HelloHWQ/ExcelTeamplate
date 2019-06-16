@@ -21,8 +21,8 @@
 
       <div class="black" v-for="black in footBlackNum"></div>
     </div>
-    <form id="mainForm">
-      <input type="file" ref="fileSelector" @change="SelectFile" style="display:none;" name="inputfile" id="inputfile">
+    <form id="mainForm" onsubmit="return false;">
+      <input type="file" ref="fileSelector" accept=".xls,.xlsx" @change="SelectFile" style="display:none;" name="inputfile" id="inputfile">
       <input type="button" :class="{selected: selected}" :value="btnMsg" @click="OpenFile">
       <input type="submit" @click="SubmitForm" value="提交">
     </form>
