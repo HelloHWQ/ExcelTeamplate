@@ -74,10 +74,14 @@ namespace ExcelTeamplate.Controllers
         [HttpPost]
         public IActionResult PostField(Model.Field field)
         {
-            if (string.IsNullOrEmpty(field.FieldName) || string.IsNullOrEmpty(field.FieldText))
+           if (string.IsNullOrEmpty(field.FieldName) || string.IsNullOrEmpty(field.FieldText))
             {
                 // 字段主要信息为空则不能录入
                 return BadRequest();
+            }
+            if(field.AddTime.Year == 1)
+            {
+                field.AddTime = DateTime.Now;
             }
             _context.Fields.Add(field);
             _context.SaveChanges();
@@ -107,7 +111,7 @@ namespace ExcelTeamplate.Controllers
             _context.Entry(field).Property("FieldLength").IsModified = false;
 
             _context.SaveChanges();
-            return NoContent();
+            return Ok(new { id = id });
         }
 
         /// <summary>
@@ -125,7 +129,7 @@ namespace ExcelTeamplate.Controllers
             }
             _context.Entry(field).State = EntityState.Deleted;
             _context.SaveChanges();
-            return NoContent();
+            return Ok(new { id= id });
         }
     }
 }

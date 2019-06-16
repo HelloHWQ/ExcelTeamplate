@@ -3,6 +3,13 @@
   padding: 0;
 }
 
+.pointer {
+  cursor: pointer;
+}
+.pointer a {
+  text-decoration: none !important;
+}
+
 [v-cloak] {
   display: none;
 }

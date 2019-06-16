@@ -12,13 +12,13 @@
 
 <body>
     <div id="app" class="main" v-cloak>
-        <h1>ExcelTemplate - Filed Add</h1>
+      <h1 class="pointer"><a href="./index.html">ExcelTemplate - Filed Add</a></h1>
         <hr>
         <form class="form-horizontal" onsubmit="return false">
             <div class="form-group">
                 <label for="FieldName" class="col-sm-2 control-label">字段英文名称*</label>
                 <div class="col-sm-5">
-                    <input type="text" v-model="currentField.fieldName" class="form-control" name="FieldName" id="FieldName" placeholder="字段英文名称">
+                    <input type="text" v-model="currentField.fieldName" v-bind:readonly="id>0" class="form-control" name="FieldName" id="FieldName" placeholder="字段英文名称">
                 </div>
             </div>
             <div class="form-group">
@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="FiledType" class="col-sm-2 control-label">字段类型*</label>
                 <div class="col-sm-5">
-                    <select class="form-control" v-model="currentField.fieldType" name="FiledType" id="FiledType">
+                    <select class="form-control" v-model="currentField.fieldType" v-bind:readonly="id>0" name="FiledType" id="FiledType">
                         <option value="0">Varchar </option>
                         <option value="1">NVarchar </option>
                         <option value="2">Int </option>
@@ -43,7 +43,7 @@
             <div class="form-group">
                 <label for="FiledLength" class="col-sm-2 control-label">字段长度*</label>
                 <div class="col-sm-5">
-                    <input type="number" v-model="currentField.fieldLength" class="form-control" name="FiledLength" id="FiledLength" placeholder="字段长度">
+                    <input type="number" v-model="currentField.fieldLength" v-bind:readonly="id>0" class="form-control" name="FiledLength" id="FiledLength" placeholder="字段长度">
                 </div>
             </div>
             <div class="form-group">
@@ -69,6 +69,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-5">
                     <button type="submit" class="btn btn-success" @click="SubmitField">提交</button>
+                    <button type="button" class="btn btn-default" @click="BacktoList">返回列表</button>
                 </div>
             </div>
 
@@ -76,8 +77,9 @@
     </div>
     <script src="./js/vue-2.6.0.js"></script>
     <script src="./js/jquery-1.8.3.min.js"></script>
+    <script src="./js/layer/layer.js"></script>
     <script>
-      const host = 'https://localhost:44386';
+      const host = 'https://localhost:5001';
       var vm = new Vue({
         el: '#app',
         data: {
@@ -105,6 +107,9 @@
               var r = window.location.search.substr(1).match(reg);
               if(r!=null)return  unescape(r[2]); return 0;
           },
+          BacktoList() {
+            window.location.href = '/fieldList.html';
+          },
           GetFiled(id) {
             var that = this;
             $.ajax({
@@ -128,16 +133,64 @@
             })
           },
           SubmitField: function() {
+            if(this.id > 0) {
+              this.UpdateField();
+              return;
+            }
             var submitmodel = this.currentField;
             // 必填验证
             if(submitmodel.fieldName !="" && submitmodel.fieldText !=""){
               $.ajax({
-                url: 'api/field',
+                url: host+'/api/field',
                 type: 'post',
                 datatype: 'json',
-                data: submitmodel,
+                contentType: 'application/json',
+                data: JSON.stringify(submitmodel),
                 success: function (data){
-                  console.log(data);
+                  if(data.id > 0) {
+                    // 成功
+                    layer.alert("字段添加成功！",{
+                      title: "提示",
+                      icon: 1
+                    });
+                  } else {
+                    // 失败
+                    layer.alert("字段添加失败！",{
+                      title: "提示",
+                      icon: 2
+                    });
+                  }
+                },
+                error: function (error) {
+                  console.log(error);
+                }
+              })
+            }
+          },
+          UpdateField() {
+            var submitmodel = this.currentField;
+            // 必填验证
+            if(submitmodel.fieldName !="" && submitmodel.fieldText !=""){
+              $.ajax({
+                url: host+'/api/field/'+this.id,
+                type: 'put',
+                datatype: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(submitmodel),
+                success: function (data){
+                  if(data.id > 0) {
+                    // 成功
+                    layer.alert("字段修改成功！",{
+                      title: "提示",
+                      icon: 1
+                    });
+                  } else {
+                    // 失败
+                    layer.alert("字段修改失败！",{
+                      title: "提示",
+                      icon: 2
+                    });
+                  }
                 },
                 error: function (error) {
                   console.log(error);

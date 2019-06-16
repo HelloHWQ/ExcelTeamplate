@@ -12,7 +12,7 @@
 
 <body>
     <div id="app" class="main" v-cloak>
-        <h1>ExcelTemplate - Filed Index</h1>
+        <h1 class="pointer"><a href="./index.html">ExcelTemplate - Filed Index</a></h1>
         <hr>
         <a href="./fieldAdd.html">
             <button type="button" class="btn btn-success" style="margin-bottom: 10px;">新增</button>
@@ -46,8 +46,9 @@
     </div>
     <script src="./js/vue-2.6.0.js"></script>
     <script src="./js/jquery-1.8.3.min.js"></script>
+    <script src="./js//layer/layer.js"></script>
     <script>
-      const host = 'https://localhost:44386';
+      const host = 'https://localhost:5001';
       const fieldType = ['Varchar', 'NVarchar', 'Int', 'Float', 'DateTime', 'Text'];
 
       var vm = new Vue({
@@ -89,6 +90,40 @@
                 console.log(error);
               }
             })
+          },
+          FieldDelete(itemid) {
+            // 首先删除vm对象中的item
+            this.fieldArray.forEach((item,index) => {
+              if(item.id == itemid) {
+                this.fieldArray.splice(index,1);
+              }
+            })
+            if(itemid > 0){
+              $.ajax({
+                url: host+"/api/field/"+itemid,
+                type: "Delete",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                  if(data.id > 0) {
+                    // 成功
+                    layer.alert("字段删除成功！",{
+                      title: "提示",
+                      icon: 1
+                    });
+                  } else {
+                    // 失败
+                    layer.alert("字段删除失败！",{
+                      title: "提示",
+                      icon: 2
+                    });
+                  }
+                },
+                error: function (error) {
+                  console.log(error);
+                }
+              })
+            }
           }
         },
         created() {
