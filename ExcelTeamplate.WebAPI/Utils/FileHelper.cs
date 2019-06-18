@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace ExcelTeamplate.Utils
+namespace ExcelTeamplate.WebAPI.Utils
 {
     public class FileHelper
     {

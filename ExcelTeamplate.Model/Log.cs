@@ -16,6 +16,11 @@ namespace ExcelTeamplate.Model
         /// </summary>
         public ActionType ActionType { set; get; }
 
+        /// <summary>
+        /// 日志类型
+        /// </summary>
+        public string LogType { set; get; }
+
         public DateTime AddTime { set; get; }
 
         public string Remark { set; get; }

@@ -2,41 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExcelTeamplate.TeamplateDbContext;
 using ExcelTeamplate.Utils;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExcelTeamplate.Controllers
 {
-    [EnableCors("AllowSameDomain")]
     [Route("api/[controller]")]
-    [ApiController]
-    public class ExcelController : ControllerBase
+    public class ExcelController : Controller
     {
-        private readonly TeamplateContext _context = null;
-        private readonly IHostingEnvironment _hostingEnvironment= null;
-
-        public ExcelController(TeamplateContext context, IHostingEnvironment hostingEnvironment)
-        {
-            _hostingEnvironment = hostingEnvironment;
-            _context = context;
-        }
+        // GET: api/<controller>
         [HttpGet]
-        public IActionResult GetTest()
+        public IEnumerable<string> Get()
         {
-            return Ok(new { code = 1 });
+            return new string[] { "value1", "value2" };
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PostImportExcel(List<IFormFile> files)
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
         {
-            Console.WriteLine(HttpContext.Request.Form.Files.Count);
-            FileHelper fileHelper = new FileHelper();
-            await fileHelper.FileSave(HttpContext, _hostingEnvironment, HttpContext.Request.Form.Files);
-            return Ok(new { count = files.Count});
+            return "value";
+        }
+
+        // POST api/<controller>
+        [HttpPost]
+        public IActionResult Post()
+        {
+            //var fields = HttpContextHelper.GetString(HttpContext, "fields");
+            var file = HttpContext.Request.Form.Files[0];
+            return Ok();
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }

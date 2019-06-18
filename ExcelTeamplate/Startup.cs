@@ -32,7 +32,7 @@ namespace ExcelTeamplate
                 (options => options.UseSqlServer(connection, b => b.UseRowNumberForPaging()));
 
             #region 跨域配置
-            var urls = "*";//Configuration["AppConfig:Cores"].Split(',');
+            var urls = "http://127.0.0.1:5500";//Configuration["AppConfig:Cores"].Split(',');
             services.AddCors(options => options.AddPolicy("AllowSameDomain", builder => builder.WithOrigins(urls).AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin().AllowCredentials() ));
             #endregion
 

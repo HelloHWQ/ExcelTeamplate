@@ -87,12 +87,15 @@ var vm = new Vue({
     },
     SubmitForm: function () {
       let formdata = new FormData($("#mainForm")[0]);
+      let fields = "";
+      this.selectFieldArray.forEach((item) => {
+        fields += item.id+",";
+      })
+      formdata.append("fields",fields);
       $.ajax({
         url: host+'/api/excel',
         type: 'post',
         datatype: 'json',
-        async: false,
-        cache: false,
         contentType: false,
         processData: false,
         data: formdata,

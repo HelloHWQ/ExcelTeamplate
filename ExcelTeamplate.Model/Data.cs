@@ -14,6 +14,11 @@ namespace ExcelTeamplate.Model
         /// </summary>
         public DataType DataType { set; get; }
 
+        /// <summary>
+        /// 每一个excel模板对应一个表名
+        /// </summary>
+        public string TableName { set; get; }
+
         public DateTime AddTime { set; get; }
     }
 }

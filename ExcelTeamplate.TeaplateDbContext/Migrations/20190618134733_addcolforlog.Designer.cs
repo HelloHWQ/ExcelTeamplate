@@ -4,14 +4,16 @@ using ExcelTeamplate.TeamplateDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExcelTeamplate.TeamplateDbContext.Migrations
 {
     [DbContext(typeof(TeamplateContext))]
-    partial class TeamplateContextModelSnapshot : ModelSnapshot
+    [Migration("20190618134733_addcolforlog")]
+    partial class addcolforlog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

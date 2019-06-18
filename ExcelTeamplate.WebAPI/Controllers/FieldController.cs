@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExcelTeamplate.WebAPI.Controllers
 {
+    [EnableCors("AllowSameDomain")]
     [Route("api/[controller]")]
     [ApiController]
     public class FieldController : ControllerBase
