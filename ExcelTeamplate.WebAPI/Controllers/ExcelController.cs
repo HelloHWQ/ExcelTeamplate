@@ -40,6 +40,7 @@ namespace ExcelTeamplate.WebAPI.Controllers
             LogHelper log = new LogHelper(_context);
             log.LogWrite("Excel文件上传开始", "Excel", ActionType.Post, HttpContext.GetClientUserIp());
             var file = HttpContext.Request.Form.Files[0];
+
             // 上传文件
             string filepath = "文件为空";
             if(file != null)
@@ -67,14 +68,23 @@ namespace ExcelTeamplate.WebAPI.Controllers
             excelFile.FileState = state;
             _context.Add<Attach>(excelFile);
             _context.SaveChanges();
+
             // 获取参数
             string fields = HttpContextHelper.GetString(HttpContext, "fields");
             var arrryField = fields.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
             // 创建excel模型专属表
+            TableHelper table = new TableHelper(_context);
+            string tablename = table.AddTableToDB(arrryField,true);
+            if(string.IsNullOrEmpty(tablename))
+            {
+                return Ok(new { msg="字段存在问题，无法创建表"});
+            }
+
             Data data = new Data();
             data.AddTime = DateTime.Now;
             data.DataType = DataType.DataIsLive;
-            data.TableName = fields;
+            data.TableName = tablename;
             _context.Add<Data>(data);
             _context.SaveChanges();
             Main main = new Main();
